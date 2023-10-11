@@ -277,7 +277,7 @@ java程序中执行 clean deploy
 mvn clean deploy -P release
 ```
 
-#### 查看是否发布成功
+## 查看是否发布成功
 
 1. 方式一：[Sonatype Nexus](https://link.juejin.cn/?target=https%3A%2F%2Fs01.oss.sonatype.org%2F%23welcome) 面板上查看https://s01.oss.sonatype.org
 
@@ -291,3 +291,31 @@ https://search.maven.org/
 
 一般24小时后能查看
 https://mvnrepository.com/
+
+### close and release
+
+项目上传到sonatype仓库后，访问 [https://oss.sonatype.org/#stagingRepositories](https://link.jianshu.com?t=https%3A%2F%2Foss.sonatype.org%2F%23stagingRepositories) 进行查看。进入此网站后，可以看到正中间的Staging Repositories，直接下拉到最后一个，如图：
+
+![img](https:////upload-images.jianshu.io/upload_images/448235-a00755d8ff3d4dfe.png?imageMogr2/auto-orient/strip|imageView2/2/w/879/format/webp)
+
+最后一个即为你发布到sonatype仓库的项目，点击左上角的close按钮。当项目状态变为closed之后，点击release按钮，输入必要的description信息后，就发布成功了。大约几小时后你就可以在中央仓库上搜索到你的项目了！
+
+### 自动release插件
+
+最后提一下sonatype提供了自动release的插件，这意味着运行mvn clean deploy后不用手动去close-> release了，此插件会自动release我们的项目到Maven中央仓库。引入方法：
+
+```java
+<!-- sonatype插件，发布使用 Nexus Staging Maven插件是将组件部署到OSS并将其发布到Central Repository -->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+```
+
