@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**

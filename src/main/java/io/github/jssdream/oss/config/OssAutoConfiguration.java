@@ -50,9 +50,12 @@ public class OssAutoConfiguration {
                 ossProperties.getSecretKey());
         AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
         // build amazonS3Client客户端
-        return AmazonS3Client.builder().withEndpointConfiguration(endpointConfiguration)
-                .withClientConfiguration(clientConfiguration).withCredentials(awsCredentialsProvider)
-                .disableChunkedEncoding().withPathStyleAccessEnabled(ossProperties.getPathStyleAccess()).build();
+        return AmazonS3Client.builder()
+                .withEndpointConfiguration(endpointConfiguration)
+                .withClientConfiguration(clientConfiguration)
+                .withCredentials(awsCredentialsProvider)
+                .disableChunkedEncoding()
+                .withPathStyleAccessEnabled(ossProperties.getPathStyleAccess()).build();
     }
 
     @Bean

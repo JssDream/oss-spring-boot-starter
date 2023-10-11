@@ -15,6 +15,7 @@
     <description>OSS API Spring Boot Starter</description>
     <url>https://github.com/JssDream/oss-spring-boot-starter/tree/main</url>
 
+    <!-- 许可证 -->
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
@@ -22,11 +23,14 @@
         </license>
     </licenses>
 
+    <!-- 源码信息 -->
     <scm>
         <url>https://github.com/JssDream/oss-spring-boot-starter</url>
         <connection>https://github.com/JssDream/oss-spring-boot-starter.git</connection>
+        <developerConnection>https://github.com/JssDream</developerConnection>
     </scm>
 
+    <!-- 个人信息,对应 gpg 配置 -->
     <developers>
         <developer>
             <name>JssDream</name>
@@ -62,6 +66,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- 配置文件提示，需加此依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -77,6 +87,7 @@
         </dependency>
     </dependencies>
 
+    <!-- 中央仓库配置id 需对应 settings.xml 的 server的id -->
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -88,9 +99,22 @@
         </repository>
     </distributionManagement>
 
+<!--    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>user release resp</name>
+            <url>http://192.168.10.150:8088/repository/maven-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>Snapshots</id>
+            <url>http://192.168.10.150:8088/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>-->
+
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
@@ -101,66 +125,91 @@
                         </exclude>
                     </excludes>
                 </configuration>
-            </plugin>
-            <!-- Source -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Javadoc -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.5.0</version>
-                <configuration>
-                    <show>private</show>
-                    <nohelp>true</nohelp>
-                    <charset>UTF-8</charset>
-                    <encoding>UTF-8</encoding>
-                    <docencoding>UTF-8</docencoding>
-                    <doclint>none</doclint>
-                    <detectJavaApiLink>false</detectJavaApiLink>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Gpg Signature -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!-- 用于gpg非交互式密码输入 -->
-                    <gpgArguments>
-                        <arg>--pinentry-mode</arg>
-                        <arg>loopback</arg>
-                    </gpgArguments>
-                </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!-- Source -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.5.0</version>
+                        <configuration>
+                            <show>private</show>
+                            <nohelp>true</nohelp>
+                            <charset>UTF-8</charset>
+                            <encoding>UTF-8</encoding>
+                            <docencoding>UTF-8</docencoding>
+                            <doclint>none</doclint>
+                            <detectJavaApiLink>false</detectJavaApiLink>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Gpg Signature -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <!--<configuration>
+                            &lt;!&ndash; 用于gpg非交互式密码输入 &ndash;&gt;
+                            <gpgArguments>
+                                <arg>&#45;&#45;pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>-->
+                    </plugin>
+                    <!-- sonatype插件，发布使用 Nexus Staging Maven插件是将组件部署到OSS并将其发布到Central Repository -->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

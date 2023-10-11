@@ -1,0 +1,35 @@
+{
+  "properties": [
+    {
+      "name": "oss.endpoint",
+      "type": "java.lang.String",
+      "description": "对象存储服务的URL,如：https://oss-cn-beijing.aliyuncs.com.",
+      "defaultValue": ""
+    },{
+      "name": "oss.region",
+      "type": "java.lang.String",
+      "description": "区域,如：oss-cn-beijing.",
+      "defaultValue": ""
+    },{
+      "name": "oss.pathStyleAccess",
+      "type": "java.lang.Boolean",
+      "description": "url路径格式(true=http://endpoint/bucketname,false=http://bucketname.endpoint).",
+      "defaultValue": ""
+    },{
+      "name": "oss.accessKey",
+      "type": "java.lang.String",
+      "description": "秘钥对 Access key.",
+      "defaultValue": ""
+    },{
+      "name": "oss.secretKey",
+      "type": "java.lang.String",
+      "description": "秘钥对 Secret key.",
+      "defaultValue": ""
+    },{
+      "name": "oss.maxConnections",
+      "type": "java.lang.Integer",
+      "description": "最大线程数，默认：100.",
+      "defaultValue": "100"
+    }
+  ]
+}
