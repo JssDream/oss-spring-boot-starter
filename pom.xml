@@ -50,6 +50,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Sping Boot 2.7.x仍然使用旧的、易受攻击的SnakeYAML版本（1.30） https://www.saoniuhuo.com/question/detail-2327867.html-->
             <dependency>
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
