@@ -10,7 +10,7 @@
     </parent>
     <groupId>io.github.jssdream</groupId>
     <artifactId>oss-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>oss-spring-boot-starter</name>
     <description>OSS API Spring Boot Starter</description>
     <url>https://github.com/JssDream/oss-spring-boot-starter/tree/main</url>
@@ -47,6 +47,16 @@
         <aws.version>1.12.565</aws.version>
         <hutool.version>5.8.22</hutool.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>2.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
